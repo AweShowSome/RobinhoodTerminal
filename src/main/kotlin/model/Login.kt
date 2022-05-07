@@ -1,6 +1,7 @@
 package model
 
-import kotlinx.serialization.*
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @Serializable
 data class Login(
@@ -43,15 +44,5 @@ fun LoggedIn.toSession(account: String): Session {
         scope = scope,
         refreshToken = refreshToken,
         account = account
-    )
-}
-
-fun Session.toLoggedIn(): LoggedIn {
-    return LoggedIn(
-        accessToken = accessToken,
-        expiresIn = expiresIn,
-        tokenType = tokenType,
-        scope = scope,
-        refreshToken = refreshToken
     )
 }

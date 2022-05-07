@@ -1,11 +1,25 @@
 package shell
 
 import httpclient.HttpClient
-import io.ktor.http.*
+import io.ktor.http.HttpStatusCode.Companion.OK
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.encodeToJsonElement
-import model.*
-import robinhood.*
+import model.ApplicationConfig
+import model.Session
+import model.Login
+import model.LoggedIn
+import model.toSession
+import model.OrderSide
+import model.OrdersResponse
+import robinhood.ApiUrls
+import robinhood.getPortfolios
+import robinhood.getQuote
+import robinhood.makeOrder
+import util.readContent
+import util.readInputSafely
+import util.canBeInt
+import util.canBeDouble
+import util.round
 
 class ShellService(private val applicationConfig: ApplicationConfig, private val client: HttpClient) {
     fun needsLogin(): Boolean {
@@ -25,7 +39,7 @@ class ShellService(private val applicationConfig: ApplicationConfig, private val
         var payload = RobinhoodShell.Json.encodeToJsonElement(login)
         var loginResponse = client.post(ApiUrls.login, payload)
         var firstAttempt = true
-        while (loginResponse.status != HttpStatusCode.OK) {
+        while (loginResponse.status != OK) {
             if (!firstAttempt) println("Could not login, try again")
             login = obtainLoginCredentials(false)
             payload = RobinhoodShell.Json.encodeToJsonElement(login)
@@ -51,7 +65,7 @@ class ShellService(private val applicationConfig: ApplicationConfig, private val
             var mfaResponseContent = mfaResponse.readContent()
 
             // need to try this to failure. Apparently, there is a limit, maybe 5 attempts?
-            while (mfaResponse.status != HttpStatusCode.OK && mfaResponseContent.contains("Please enter a valid code.")) {
+            while (mfaResponse.status != OK && mfaResponseContent.contains("Please enter a valid code.")) {
                 println("Please enter a valid code: ")
                 code = readLine()?.trim()?.toInt() ?: -1
                 mfaPayload = RobinhoodShell.Json.encodeToJsonElement(login2FA.copy(mfaCode = code))
@@ -86,12 +100,6 @@ class ShellService(private val applicationConfig: ApplicationConfig, private val
             quote = getQuote(symbol.uppercase(), client, bearerToken)
         }
 
-        // original
-//        var type = readInputSafely("Order type (market, limit): ").lowercase() // or could default to "market" order, also make an enum
-//        while (type != "limit" && type != "market") {
-//            type = readInputSafely("Bad order type, try again. Order type (market, limit): ")
-//        }
-
         val type = readInputSafely("Order type (market, limit): ").let {
             var input = it.lowercase()
             while (input != "market" && input != "limit") {
@@ -100,29 +108,6 @@ class ShellService(private val applicationConfig: ApplicationConfig, private val
             input
         }
 
-        // trying to use less vars
-//        val typeee = try {
-//            val input = readInputSafely("Order type (market, limit): ").lowercase()
-//            if (input != "limit" && input != "market") {
-//                throw IllegalArgumentException(input)
-//            } else {
-//                input
-//            }
-//        } catch (e: IllegalArgumentException) {
-//            while ((e.message != "limit" && e.message != "market") &&) {
-//                type = readInputSafely("Not an option, pick an order type (market, limit): ")
-//            }
-//        }
-
-        // original
-//        val price = if (type == "limit") {
-//            println("Limit price: ")
-//            readLine()?.toDouble() // if no limit price is set, then it will be a market order.
-//        } else {
-//            null
-//        }
-
-        // new
         val price =
             if (type == "limit") {
                 var input = readInputSafely("Limit price: ")
@@ -133,14 +118,6 @@ class ShellService(private val applicationConfig: ApplicationConfig, private val
             } else {
                 null
             }
-
-        // original
-//        println("Quantity: ")
-//        val quantity = readLine()?.toInt() ?: 0
-
-        // original
-//        println("Time duration Good for Day or Good Till Canceled (gfd, gtc): ")
-//        val timeInForce = readLine() ?: "gtc"
 
         val timeInForce = readInputSafely("Time duration Good for Day or Good Till Canceled (gfd, gtc): ").let {
             var input = it.lowercase()
