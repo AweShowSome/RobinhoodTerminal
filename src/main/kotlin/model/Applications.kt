@@ -3,7 +3,7 @@ package model
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import util.UUIDSerializer
-import java.util.*
+import java.util.UUID
 
 @Serializable
 data class Applications(

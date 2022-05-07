@@ -1,14 +1,25 @@
 package robinhood
 
 import httpclient.HttpClient
-import io.ktor.http.*
+import io.ktor.http.HttpStatusCode.Companion.OK
 import io.ktor.utils.io.jvm.javaio.toInputStream
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.decodeFromStream
 import kotlinx.serialization.json.encodeToJsonElement
-import model.*
+import model.Portfolios
+import model.Positions
+import model.Dividends
+import model.Markets
+import model.Applications
+import model.User
+import model.InvestmentProfile
+import model.Instruments
+import model.Quotes
+import model.Orders
+import model.OrdersResponse
 import shell.RobinhoodShell
 import java.util.UUID
+import util.readContent
 
 // GETs
 suspend fun getPortfolios(client: HttpClient, bearerToken: String): Portfolios {
@@ -55,7 +66,7 @@ suspend fun getInstrument(id: UUID, client: HttpClient, bearerToken: String): In
 // or could create a seperate function that takes in a list and calls this function, but wasted effort in passing around client and token
 suspend fun getQuote(ticker: String, client: HttpClient, bearerToken: String): Quotes? {
     val response = client.get(ApiUrls.quotes(ticker.uppercase()), bearerToken)
-    if (response.status != HttpStatusCode.OK) {
+    if (response.status != OK) {
         return null
     }
     return RobinhoodShell.Json.decodeFromStream(response.content.toInputStream())

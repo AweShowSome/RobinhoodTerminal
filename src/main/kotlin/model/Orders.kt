@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 import util.OffsetDateTimeSerializer
 import util.UUIDSerializer
 import java.time.OffsetDateTime
-import java.util.*
+import java.util.UUID
 
 @Serializable
 data class Orders(

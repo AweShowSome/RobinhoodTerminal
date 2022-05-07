@@ -19,7 +19,6 @@ data class PortfolioResult(
     val account: String,
     @SerialName("start_date")
     @Contextual
-//    @Serializable(with = LocalDateComponentSerializer::class)
     val startDate: LocalDate,
     @SerialName("market_value")
     val marketValue: Double,
