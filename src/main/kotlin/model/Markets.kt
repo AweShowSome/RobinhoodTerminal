@@ -19,7 +19,7 @@ data class MarketResult(
     val operatingMic: String,
     val acronym: String,
     val name: String,
-    val city : String,
+    val city: String,
     val country: String,
     val timezone: String,
     val website: String // could be URL

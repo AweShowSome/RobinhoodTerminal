@@ -13,8 +13,8 @@ import robinhood.getPortfolios
 import robinhood.getPositions
 import robinhood.getQuote
 import robinhood.getUserInfo
-import java.util.UUID
 import util.readInputSafely
+import java.util.UUID
 
 class RobinhoodShell(
     val applicationConfig: ApplicationConfig,
@@ -75,7 +75,7 @@ class RobinhoodShell(
                     println(getMarkets(client, session.accessToken))
                 }
                 "portfolios" -> {
-                    println(getPortfolios(client, session.accessToken)) //"p" || "portfolio"
+                    println(getPortfolios(client, session.accessToken)) // "p" || "portfolio"
                 }
                 "positions" -> {
                     println(getPositions(client, session.accessToken))

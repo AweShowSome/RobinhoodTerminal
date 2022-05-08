@@ -1,11 +1,11 @@
 package model
 
 import kotlinx.serialization.SerialName
-import java.util.UUID
 import kotlinx.serialization.Serializable
 import util.OffsetDateTimeSerializer
 import util.UUIDSerializer
 import java.time.OffsetDateTime
+import java.util.UUID
 
 @Serializable
 data class User(
