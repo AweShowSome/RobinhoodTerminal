@@ -44,17 +44,17 @@ Run this command to build the jar
   Here are some pictures to get you going in the right direction for obtaining all the session info (Using Insomnia):
     * #### Step 1: Login API (`https://api.robinhood.com/oauth2/token/`)
  
-      ![](src\main\resources\assets\Login.png)
+      ![](src/main/resources/assets/Login.png)
          
       Make sure you add a `Content-Type` header with the value `application/json`
-      ![](src\main\resources\assets\LoginContentType.png)
+      ![](src/main/resources/assets/LoginContentType.png)
     
     * #### Step 1.5 (Do this if you have 2FA): Login with 2FA after you get your code (`https://api.robinhood.com/oauth2/token/`)
 
-      ![](src\main\resources\assets\Login2FA.png)
+      ![](src/main/resources/assets/Login2FA.png)
 
       Make sure you add a `Content-Type` header with the value `application/json`
-      ![](src\main\resources\assets\LoginContentType.png)
+      ![](src/main/resources/assets/LoginContentType.png)
 
       * Output from successful Login API call:
         ```
@@ -73,11 +73,11 @@ Run this command to build the jar
     * #### Step 2 Use the Accounts API to obtain the account number (`https://api.robinhood.com/accounts/`)
       Go to auth tab and select bearer token
 
-      ![](src\main\resources\assets\AccountsAuth.png)
+      ![](src/main/resources/assets/AccountsAuth.png)
    
       Insert Bearer Token from Login response here
 
-      ![](src\main\resources\assets\AccountsBearer.png)
+      ![](src/main/resources/assets/AccountsBearer.png)
       
       * Output from successful Accounts API call:
         ```
