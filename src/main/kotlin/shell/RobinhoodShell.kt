@@ -46,7 +46,7 @@ class RobinhoodShell(
         while (true) {
             val input = readInputSafely(">> ")
             when (input) {
-                null -> println("press 'h' for help")
+//                null -> println("press 'h' for help")
                 "stop" -> {
                     break
                 }
@@ -95,9 +95,8 @@ class RobinhoodShell(
                     println("not valid action")
                 }
             }
-            if (input != null) {
-                history.add(input)
-            }
+
+            history.add(input)
             println(history) // remove if you dont want to view history
         }
     }

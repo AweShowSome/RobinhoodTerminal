@@ -55,6 +55,10 @@ tasks {
     remove("RobinhoodTerminal-1.0-SNAPSHOT.jar")
 }
 
+tasks.withType<JavaCompile> {
+    options.isWarnings = false
+}
+
 application {
     mainClass.set("RobinhoodTerminalKt")
 }

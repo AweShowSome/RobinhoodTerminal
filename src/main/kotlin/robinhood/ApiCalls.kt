@@ -26,6 +26,7 @@ suspend fun getPortfolios(client: HttpClient, bearerToken: String): Portfolios {
     val response = client.get(ApiUrls.portfolios, bearerToken)
     return RobinhoodShell.Json.decodeFromStream(response.content.toInputStream())
 }
+
 suspend fun getPositions(client: HttpClient, bearerToken: String): Positions {
     val response = client.get(ApiUrls.positions, bearerToken)
     return RobinhoodShell.Json.decodeFromStream(response.content.toInputStream())
