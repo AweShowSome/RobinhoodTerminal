@@ -6,27 +6,28 @@ import io.ktor.utils.io.jvm.javaio.toInputStream
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.decodeFromStream
 import kotlinx.serialization.json.encodeToJsonElement
-import model.Portfolios
-import model.Positions
-import model.Dividends
-import model.Markets
 import model.Applications
-import model.User
-import model.InvestmentProfile
+import model.Dividends
 import model.Instruments
-import model.Quotes
+import model.InvestmentProfile
+import model.Markets
 import model.Orders
 import model.OrdersResponse
+import model.Portfolios
+import model.Positions
+import model.Quotes
+import model.User
 import shell.RobinhoodShell
-import java.util.UUID
 import util.readContent
+import java.util.UUID
 
 // GETs
 suspend fun getPortfolios(client: HttpClient, bearerToken: String): Portfolios {
     val response = client.get(ApiUrls.portfolios, bearerToken)
     return RobinhoodShell.Json.decodeFromStream(response.content.toInputStream())
 }
-suspend fun getPositions(client: HttpClient, bearerToken: String):Positions {
+
+suspend fun getPositions(client: HttpClient, bearerToken: String): Positions {
     val response = client.get(ApiUrls.positions, bearerToken)
     return RobinhoodShell.Json.decodeFromStream(response.content.toInputStream())
 }

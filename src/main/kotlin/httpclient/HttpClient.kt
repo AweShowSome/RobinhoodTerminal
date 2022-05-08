@@ -41,7 +41,7 @@ class HttpClient(engine: HttpClientEngine) : AutoCloseable {
         payload: JsonElement,
         bearerToken: String? = null
     ): HttpResponse {
-        client.post<HttpResponse>{
+        client.post<HttpResponse> {
             url(url)
             headers {
                 header("Accept", "application/json")

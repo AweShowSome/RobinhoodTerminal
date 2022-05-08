@@ -4,6 +4,7 @@ plugins {
     kotlin("jvm") version "1.6.20"
     kotlin("plugin.serialization") version "1.5.0"
     application
+    id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
 }
 
 group = "me.developer"
@@ -17,12 +18,10 @@ dependencies {
     val ktorVersion: String by project
     implementation("com.sksamuel.hoplite:hoplite-core:1.4.16")
     implementation("com.sksamuel.hoplite:hoplite-hocon:1.4.16")
-//    implementation("io.ktor:ktor-client-core:$ktorVersion")
     implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
     implementation("io.ktor:ktor-client-serialization:$ktorVersion")
     implementation("io.ktor:ktor-serialization:$ktorVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
-//    implementation("io.ktor:ktor-jackson:$ktorVersion")
     testImplementation(kotlin("test"))
 }
 
@@ -43,7 +42,7 @@ tasks {
         val sourcesMain = sourceSets.main.get()
         val contents = configurations.runtimeClasspath.get()
             .map { if (it.isDirectory) it else zipTree(it) } +
-                sourcesMain.output
+            sourcesMain.output
         from(contents)
         exclude("*.conf")
     }
@@ -56,6 +55,10 @@ tasks {
     remove("RobinhoodTerminal-1.0-SNAPSHOT.jar")
 }
 
+tasks.withType<JavaCompile> {
+    options.isWarnings = false
+}
+
 application {
-    mainClass.set("MainKt")
+    mainClass.set("RobinhoodTerminalKt")
 }

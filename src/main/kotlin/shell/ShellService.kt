@@ -5,20 +5,20 @@ import io.ktor.http.HttpStatusCode.Companion.OK
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.encodeToJsonElement
 import model.ApplicationConfig
-import model.Session
-import model.Login
 import model.LoggedIn
-import model.toSession
+import model.Login
 import model.OrderSide
 import model.OrdersResponse
+import model.Session
+import model.toSession
 import robinhood.ApiUrls
 import robinhood.getPortfolios
 import robinhood.getQuote
 import robinhood.makeOrder
+import util.canBeDouble
+import util.canBeInt
 import util.readContent
 import util.readInputSafely
-import util.canBeInt
-import util.canBeDouble
 import util.round
 
 class ShellService(private val applicationConfig: ApplicationConfig, private val client: HttpClient) {
@@ -140,7 +140,6 @@ class ShellService(private val applicationConfig: ApplicationConfig, private val
             }
             input.toDouble()
         }
-
 
         quote = getQuote(symbol, client, bearerToken)
 

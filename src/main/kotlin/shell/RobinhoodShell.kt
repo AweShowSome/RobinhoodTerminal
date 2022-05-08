@@ -13,8 +13,8 @@ import robinhood.getPortfolios
 import robinhood.getPositions
 import robinhood.getQuote
 import robinhood.getUserInfo
-import java.util.UUID
 import util.readInputSafely
+import java.util.UUID
 
 class RobinhoodShell(
     val applicationConfig: ApplicationConfig,
@@ -46,7 +46,7 @@ class RobinhoodShell(
         while (true) {
             val input = readInputSafely(">> ")
             when (input) {
-                null -> println("press 'h' for help")
+//                null -> println("press 'h' for help")
                 "stop" -> {
                     break
                 }
@@ -75,7 +75,7 @@ class RobinhoodShell(
                     println(getMarkets(client, session.accessToken))
                 }
                 "portfolios" -> {
-                    println(getPortfolios(client, session.accessToken)) //"p" || "portfolio"
+                    println(getPortfolios(client, session.accessToken)) // "p" || "portfolio"
                 }
                 "positions" -> {
                     println(getPositions(client, session.accessToken))
@@ -95,9 +95,8 @@ class RobinhoodShell(
                     println("not valid action")
                 }
             }
-            if (input != null) {
-                history.add(input)
-            }
+
+            history.add(input)
             println(history) // remove if you dont want to view history
         }
     }
