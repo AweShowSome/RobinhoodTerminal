@@ -9,6 +9,11 @@ Here is my [Robinhood referral link](https://join.robinhood.com/nimishu) to get 
 Just run it
 
 ### Mac
+Run this command to make the `gradlew` file executable
+
+  ```
+  chmod +x gradlew
+  ```
 Run this command to build the jar
   ```
   ./gradlew build
